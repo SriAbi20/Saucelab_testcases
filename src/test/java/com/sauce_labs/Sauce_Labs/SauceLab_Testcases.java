@@ -26,7 +26,7 @@ public class SauceLab_Testcases {
     public void setup() {
         // Set the system property for the ChromeDriver executable
         //System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
-
+    	
         // Initialize the ChromeDriver instance
         driver = new ChromeDriver();
 
@@ -37,7 +37,7 @@ public class SauceLab_Testcases {
         loginPage = new LoginPage(driver);
         allItemsPage = new AllItemsPage(driver);
     }
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void validLoginTest() {
         driver.get("https://www.saucedemo.com/");
 
@@ -78,31 +78,31 @@ public class SauceLab_Testcases {
         
         
         //close the current(About) page
-        driver.close();
+        //driver.close();
     }
     
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void logoutTest() {
-        driver.get("https://www.saucedemo.com/");
+    	 driver.get("https://www.saucedemo.com/");
 
-        // Perform the login process
-        loginPage.enterUsername("standard_user");
-        loginPage.enterPassword("secret_sauce");
-        loginPage.clickLoginButton();
-        
-     // Wait for the All Items page to load
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
-        wait.until(ExpectedConditions.urlContains("inventory.html"));
-        
-        // Update the page object reference after login
-        //allItemsPage = new AllItemsPage(driver);
-        
-         // Click on the menu
-        allItemsPage.clickMenu();
+         // Perform the login process
+         loginPage.enterUsername("standard_user");
+         loginPage.enterPassword("secret_sauce");
+         loginPage.clickLoginButton();
+         
+      // Wait for the All Items page to load
+         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+         wait.until(ExpectedConditions.urlContains("inventory.html"));
+         
+         // Update the page object reference after login
+         //allItemsPage = new AllItemsPage(driver);
+         
+          // Click on the menu
+         allItemsPage.clickMenu();
 
-        // Assume that the user is already on the All Items page
-        // Click on the Logout link
-     // Additional test steps on the All Items page
+         // Assume that the user is already on the All Items page
+         // Click on the Logout link
+      // Additional test steps on the All Items page
         
         By logoutLinkLocator = By.linkText("Logout");
         WebElement logoutLink = wait.until(ExpectedConditions.elementToBeClickable(logoutLinkLocator));
@@ -119,7 +119,7 @@ public class SauceLab_Testcases {
 
         // Additional test steps after logging out
     }
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void invalidCredentialsTest() {
         driver.get("https://www.saucedemo.com/");
 
@@ -135,7 +135,7 @@ public class SauceLab_Testcases {
         driver.close();
     }
     
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void testNavigation() {
     	// Open the login page
         driver.get("https://www.saucedemo.com/");
@@ -180,7 +180,20 @@ public class SauceLab_Testcases {
         //driver.close();
            	    
     }
-    
+    @Test(enabled=true)
+    public void testAddItemsToCart() {
+    	// Login to the website by calling validLoginTest()
+          validLoginTest();
+       
+       // Navigate to the All Items page
+       //allItemsPage.navigateToAllItems();
+
+       // Add items to the cart
+       allItemsPage.addItemToCart("Sauce Labs Backpack");
+       allItemsPage.addItemToCart("Sauce Labs Bike Light");
+       allItemsPage.addItemToCart("Sauce Labs Bolt T-Shirt");
+    	
+    }
  // Helper method to click an element using JavaScript
     private void clickElementWithJavaScript(WebDriver driver, WebElement element) {
         JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;

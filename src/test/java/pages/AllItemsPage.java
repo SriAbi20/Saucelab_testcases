@@ -1,5 +1,6 @@
 package pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -42,6 +43,8 @@ public class AllItemsPage {
     @FindBy(xpath = "//button[@id='react-burger-menu-btn']")
     private WebElement menuButton;
     
+    @FindBy(xpath = "//div[contains(@class, 'inventory_item')]//div[contains(@class, 'inventory_item_name') and contains(text(), 'itemNamePlaceholder')]//ancestor::div[contains(@class, 'inventory_item')]//button[contains(@class, 'btn_inventory') and contains(text(), 'Add to cart')]")
+    private WebElement addToCartButton;
     
 
     public AllItemsPage(WebDriver driver) {
@@ -68,5 +71,13 @@ public class AllItemsPage {
     public void clickResetAppStateLink() {
         resetAppStateLink.click();
     }
-    
+    public void addItemToCart(String itemName) {
+        WebElement item = driver.findElement(By.xpath("//div[contains(@class, 'inventory_item_name') and contains(text(), '" + itemName + "')]"));
+        WebElement addToCartButton = item.findElement(By.xpath(".//ancestor::div[contains(@class, 'inventory_item')]//button[contains(@class, 'btn_inventory') and contains(text(), 'Add to cart')]"));
+        String itemPriceXPath = ".//ancestor::div[contains(@class, 'inventory_item')]//div[contains(@class, 'inventory_item_price')]";
+        WebElement itemPriceElement = item.findElement(By.xpath(itemPriceXPath));
+        String itemPrice = itemPriceElement.getText();
+        System.out.println(itemPrice);
+        addToCartButton.click();
+    }
 }
